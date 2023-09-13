@@ -2,7 +2,7 @@ import fs from "fs";
 import { parse } from "csv";
 import paymentClient from "./client/paymentServiceClient.js";
 
-fs.createReadStream("./data/subscription_data.csv")
+fs.createReadStream("./data/subscription_data_update_package.csv")
     .pipe(parse({ delimiter: ",", from_line: 2 }))
     .on("data", async function (row) {
         createSubscriptionData(row);
@@ -31,15 +31,13 @@ async function createSubscriptionData(row) {
             paymentOrderData
         );
         console.log("create payment order success");
-        let selectPayAsCashResponse = await paymentClient.selectPayAsCash(
-            paymentOrderDataResponse.data.id
-        );
+        await paymentClient.selectPayAsCash(paymentOrderDataResponse.data.id);
         console.log("select payment method success");
         let confirmResponse = await paymentClient.paymentStaffConfirm(
             paymentOrderDataResponse.data.id,
             "SUCCESS"
         );
-        console.log("confirm response success", confirmResponse.data);
+        console.log("confirm response success", confirmResponse.data.id);
         console.log("create subscription success !!!");
         console.log("-----------------------------------");
     } catch (error) {

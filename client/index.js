@@ -1,7 +1,7 @@
 import axios from "axios";
 
 var jwtToken =
-    "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI1OTk5Iiwic3ViIjoiYWRtaW4iLCJleHAiOjE2OTQ1NzEyMjF9.j-02y0YbuhH090zd_FCBddoyAfPD2GfjcOuRU6pDqCMoSUBTv8r8HlXjvn7pGNiLAa1ZcI1Tt9Q9L3GL3QClCw";
+    "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiI2MDAxIiwic3ViIjoiYWRtaW4iLCJleHAiOjE2OTQ2NTgwNzN9.Ve288MUHT6MVK0HTSmCyB5McSIANuVQdq0tWWwf_wovFLcc02h52IpdAPvSRw5LFhAE_aGkkYy2oi9y8hsx3Sw";
 
 export default axios.create({
     baseURL: "http://localhost:8080",
