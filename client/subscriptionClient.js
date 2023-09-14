@@ -16,13 +16,19 @@ const subscriptionClient = {
 
     getSubscriptionCurrentByVehicle: async (vehicleSerial) => {
         return client.get(
-            `/services/subscriptionservice/api/driver/subscription-data/vehicle/${vehicleSerial}/current`
+            `/services/subscriptionservice/api/v2/driver/subscription-data/vehicle/${vehicleSerial}/current`
+        );
+    },
+
+    getSubscriptionLastByVehicle: async (vehicleSerial) => {
+        return client.get(
+            `/services/subscriptionservice/api/v2/driver/subscription-data/vehicle/${vehicleSerial}/last`
         );
     },
 
     cancelSubscriptionData: async (subId) => {
         return client.patch(
-            `/services/subscriptionservice/api/subscription-data/${subId}/status?status=CANCELLED`
+            `/services/subscriptionservice/api/v2/subscription-data/${subId}/status?status=CANCELLED`
         );
     },
 };

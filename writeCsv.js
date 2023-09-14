@@ -21,9 +21,7 @@ fs.createReadStream("./data/subscription_data_update_package.csv")
     .on("data", async function (row) {
         try {
             var response =
-                await subscriptionClient.getSubscriptionCurrentByVehicle(
-                    row[1]
-                );
+                await subscriptionClient.getSubscriptionLastByVehicle(row[1]);
             console.log(
                 row[1],
                 response.data.totalCost,

@@ -21,7 +21,12 @@ async function cancelSubscriptionData(row) {
             await subscriptionClient.getSubscriptionCurrentByVehicle(
                 vehicleSerial
             );
-        console.log(subscriptionDataCurrentResponse.data.id);
+        let id = subscriptionDataCurrentResponse.data.id;
+        await subscriptionClient.cancelSubscriptionData(id);
+        console.log(
+            "cancel subscription of vehicle " +
+                subscriptionDataCurrentResponse.data.vehicleSerial
+        );
     } catch (error) {
         console.log("cancel failed vehicle " + vehicleSerial);
         console.error(error.response.data);

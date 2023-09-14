@@ -19,7 +19,7 @@ async function createSubscriptionData(row) {
         type: "BUY_NEW_PACKAGE",
         destinationId: row[2],
         vehicleSerial: row[1],
-        userRenewal: true,
+        userRenewal: false,
         startDate: row[4],
         expiredDate: row[5],
         user: "dev3",
