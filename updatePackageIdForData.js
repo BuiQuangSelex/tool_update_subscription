@@ -4,7 +4,7 @@ import subscriptionClient from "./client/subscriptionClient.js";
 var pathFileOutput = "./data/subscription_data_update_package.csv";
 fs.writeFileSync(
     pathFileOutput,
-    "regions,vehicle,package_id,package_code,start,end\n"
+    "regions,vehicle,package_id,package_code,package_type,start,end\n"
 );
 
 // read file data
@@ -22,9 +22,16 @@ fs.createReadStream("./data/subscription_data.csv")
 
 async function updatePackageIdForData(packageRow) {
     try {
-        let packageCode = packageRow[3];
-        packageRow[4] = formatDateString(packageRow[4]);
-        packageRow[5] = formatDateString(packageRow[5]);
+        let packageCode = packageRow[2];
+        let startDate = formatDateString(packageRow[3]);
+        let endDate = formatDateString(packageRow[4]);
+        let regions = packageRow[0];
+        let vehicleSerial = packageRow[1];
+        let packageId = 0;
+        let packageType = null;
+        let totalCost = packageRow[5];
+        let deposited = packageRow[6];
+        let debt = packageRow[7];
 
         let response = await subscriptionClient.getPackageDataByCode(
             packageCode
@@ -34,14 +41,15 @@ async function updatePackageIdForData(packageRow) {
                 id: response.data[0].id,
                 packageCode,
             });
-            packageRow[2] = response.data[0].id;
+            packageId = response.data[0].id;
+            packageType = response.data[0].type;
         }
 
-        let rowData = packageRow.join(",");
-        console.log(packageRow.join(","));
-        fs.appendFileSync(pathFileOutput, `${rowData}\n`);
+        let rowData = `${regions},${vehicleSerial},${packageId},${packageCode},${packageType},${startDate},${endDate},${totalCost},${deposited},${debt}\n`;
+
+        fs.appendFileSync(pathFileOutput, rowData);
     } catch (error) {
-        console.log(error);
+        console.log(error.response.data);
     }
 }
 

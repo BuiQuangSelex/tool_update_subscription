@@ -7,7 +7,7 @@ import { time } from "console";
 let pathFileOutput = "./data/output.csv";
 fs.writeFileSync(
     pathFileOutput,
-    "regions,vehicle,package_id, package_code, start, end,total cost,deposited,debt,totalCost[sys],deposited[sys],debt[sys]\n"
+    "regions,vehicle,package_id, package_code,package_type,start, end,total cost,deposited,debt,totalCost[sys],deposited[sys],debt[sys]\n"
 );
 
 /**

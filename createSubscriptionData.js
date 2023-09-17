@@ -15,30 +15,32 @@ fs.createReadStream("./data/subscription_data_update_package.csv")
     });
 
 async function createSubscriptionData(row) {
-    let paymentOrderData = {
+    let paymentOrderDataCreate = {
         type: "BUY_NEW_PACKAGE",
         destinationId: row[2],
         vehicleSerial: row[1],
         userRenewal: false,
-        startDate: row[4],
-        expiredDate: row[5],
+        startDate: row[5],
+        expiredDate: row[6],
         user: "dev3",
         pain: false,
     };
 
     try {
-        let paymentOrderDataResponse = await paymentClient.createPaymentOrder(
-            paymentOrderData
-        );
+        let paymentOrderDataCreateResponse =
+            await paymentClient.createPaymentOrder(paymentOrderDataCreate);
         console.log("create payment order success");
-        await paymentClient.selectPayAsCash(paymentOrderDataResponse.data.id);
+        await paymentClient.selectPayAsCash(
+            paymentOrderDataCreateResponse.data.id
+        );
         console.log("select payment method success");
         let confirmResponse = await paymentClient.paymentStaffConfirm(
-            paymentOrderDataResponse.data.id,
+            paymentOrderDataCreateResponse.data.id,
             "SUCCESS"
         );
         console.log("confirm response success", confirmResponse.data.id);
         console.log("create subscription success !!!");
+
         console.log("-----------------------------------");
     } catch (error) {
         console.error(error.response.data);

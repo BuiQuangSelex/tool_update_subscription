@@ -24,3 +24,10 @@ node createSubscriptionData.js
 ```shell
 node writeCsv.js
 ```
+
+
+## Run file sh
+
+```shell
+./run_command.sh
+```

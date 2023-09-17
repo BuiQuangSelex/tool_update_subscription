@@ -2,19 +2,22 @@ import vehicleClient from "./client/vehicleClient.js";
 import fs from "fs";
 import { parse } from "csv";
 
-fs.createReadStream("./data/subscription_data.csv")
+fs.createReadStream("./data/subscription_data_update_package.csv")
     .pipe(parse({ delimiter: ",", from_line: 2 }))
     .on("data", async function (row) {
         await assignUserToVehicle(row);
         try {
-            let response = await vehicleClient.assignUserVehicle(
-                "dev3",
-                row[1]
-            );
-            console.log(
-                "assign vehicle successfully " + row[1],
-                response.status
-            );
+            if (row[4].startsWith("BP")) {
+                let response = await vehicleClient.assignUserVehicle(
+                    "dev3",
+                    row[1]
+                );
+                console.log(
+                    "assign vehicle successfully " + row[1],
+                    response.data.user,
+                    response.status
+                );
+            }
         } catch (error) {
             console.log("assign vehicle fail " + row[1], error.response.data);
         }
@@ -30,9 +33,11 @@ async function assignUserToVehicle(row) {
     let vehicleSerial = row[1];
     try {
         let response1 = await vehicleClient.unassignUsersVehicle(vehicleSerial);
-        console.log(response1.status);
-        console.log("unassign users to th vehicle " + vehicleSerial);
-        console.log("successfully!!!");
+        console.log(
+            "unassign users to the vehicle " + vehicleSerial,
+            "successfully",
+            response1.status
+        );
     } catch (error) {
         if ("error.VEHICLE_NOT_FOUND" == error.response.data.message) {
             console.log("create vehicle");
