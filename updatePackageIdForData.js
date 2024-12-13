@@ -7,8 +7,11 @@ fs.writeFileSync(
     "regions,vehicle,package_id,package_code,package_type,start,end\n"
 );
 
+var pathFileRentBattery = "./data/subscription_data.csv";
+var pathFileRentVehicle = "./data/subscription_data_rent_vehicle.csv";
+
 // read file data
-fs.createReadStream("./data/subscription_data.csv")
+fs.createReadStream(pathFileRentVehicle)
     .pipe(parse({ delimiter: ",", from_line: 2 }))
     .on("data", function (row) {
         updatePackageIdForData(row);
